@@ -1,0 +1,28 @@
+CREATE DATABASE metadata;
+
+
+CREATE TABLE  public.TestcaseTable (
+    ID SERIAL PRIMARY KEY,
+    Testcase VARCHAR(255) NOT NULL,
+    SAPCode VARCHAR(255) NOT NULL,
+    Tenant VARCHAR(255) NOT NULL,
+    Project VARCHAR(255) NOT NULL,
+    App VARCHAR(255) NOT NULL,
+    Statistic VARCHAR(255) NOT NULL
+);
+
+CREATE USER matthieu WITH PASSWORD 'matthieu';
+
+GRANT ALL PRIVILEGES ON DATABASE metadata TO matthieu;
+
+\c metadata
+
+
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO matthieu;
+
+GRANT ALL on testcasetable TO matthieu;
+ GRANT ALL PRIVILEGES ON testcasetable_id_seq TO matthieu; 
+ 
+INSERT INTO testcasetable (testcase, sapcode, tenant, project, app, statistic) VALUES ('A','B','C','D','E','F') RETURNING ID
+
+>set DATABASE_URL=postgres://matthieu:matthieu@localhost:5432/metadata
